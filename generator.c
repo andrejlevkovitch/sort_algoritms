@@ -13,6 +13,7 @@ int main (void)
     int min = 0, max = 0;
     char condition = 0;
     char lie = 0;
+    int minElement = 0, maxElement = 0;
 
     srand (time (NULL));
 
@@ -30,7 +31,7 @@ int main (void)
     printf ("max = ");
     scanf ("%i", &max);
 
-    if (max == INT_MAX)
+    if (max == INT_MAX || max < min)
         exit (EXIT_FAILURE);
 
     if (max - min == size - 1) {
@@ -50,6 +51,9 @@ int main (void)
         int *array = malloc (size * sizeof *array);
         unsigned short last = size;
         int temp = 0;
+
+        minElement = min;
+        maxElement = max;
 
         for (unsigned int i = 0; i < size; ++i) {
             array [i] = min + i;
@@ -71,6 +75,14 @@ int main (void)
         for (unsigned int i = 0; i < size; ++i) {
             randElement = min + rand() % (max + 1);
 
+            if (minElement > randElement) {
+                minElement = randElement;
+            }
+            else
+                if (maxElement < randElement) {
+                    maxElement = randElement;
+                }
+
             fprintf (input, "%i ", randElement);
         }
     }
@@ -81,6 +93,7 @@ int main (void)
     }
 
     printf ("The file was created successfully.\n");
+    printf ("minElement = %i; maxElement = %i\n", minElement, maxElement);
 
     return EXIT_SUCCESS;
 }
