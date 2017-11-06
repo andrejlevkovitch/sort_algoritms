@@ -2,3 +2,5 @@ insert
 swap
 mergesort
 qsort
+generator
+countsort
