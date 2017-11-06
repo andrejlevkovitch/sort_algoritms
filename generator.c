@@ -13,7 +13,7 @@ int main (void)
     int min = 0, max = 0;
     char condition = 0;
     char lie = 0;
-    int minElement = 0, maxElement = 0;
+    int minElement = INT_MAX, maxElement = INT_MIN;
 
     srand (time (NULL));
 
@@ -70,10 +70,13 @@ int main (void)
         for (unsigned int i = 0; i < size; ++i) {
             fprintf (input, "%i ", array [i]);
         }
+
+        free (array);
+        array = NULL;
     }
     else {
         for (unsigned int i = 0; i < size; ++i) {
-            randElement = min + rand() % (max + 1);
+            randElement = min + rand() % (max + 1 - min);
 
             if (minElement > randElement) {
                 minElement = randElement;
