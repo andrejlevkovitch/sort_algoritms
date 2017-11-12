@@ -33,15 +33,15 @@ int main (void)
                 maxElement = array [i];
     }
 
+    if (fclose (input) != 0) {
+        printf ("ERROR of exit from file input.txt\n");
+        exit (EXIT_FAILURE);
+    }
+
     countArray = malloc ((maxElement + 1 - minElement) * sizeof *countArray);
 
     for (unsigned int i = 0; i < maxElement + 1 - minElement; ++i) {
         countArray [i] = 0;//обнуляем все элементы, чтобы избавится от мусора
-    }
-
-    if (fclose (input) != 0) {
-        printf ("ERROR of exit from file input.txt\n");
-        exit (EXIT_FAILURE);
     }
 
     for (unsigned int i = 0; i < size; ++i) {
