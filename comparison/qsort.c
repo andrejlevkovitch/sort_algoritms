@@ -1,9 +1,10 @@
-//qsort.c - быстрая сортировка с выбором среднего элемента в качестве опоры
+//qsort.c - быстрая сортировка с выбором случайноuго элемента в качестве опоры
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
-void quick (int array [], int first, int last);
+void quickSort (int array [], int first, int last);
 
 int main (void)
 {
@@ -30,7 +31,7 @@ int main (void)
         exit (EXIT_FAILURE);
     }
 
-    quick (array, 0, size - 1);
+    quickSort (array, 0, size - 1);
 
     if ((output = fopen ("output.txt", "w")) == NULL) {
         printf ("ERROR of open file output.txt\n");
@@ -46,14 +47,20 @@ int main (void)
         exit (EXIT_FAILURE);
     }
 
+    free (array);
+    array = NULL;
+
     return EXIT_SUCCESS;
 }
 
-void quick (int array [], int first, int last)
+void quickSort (int array [], int first, int last)
 {
+    srand (time (NULL));
+
     int left = first;
     int right = last;
-    int midle = array [(left + right) / 2];
+    int midle = array [left + rand () % (right - left + 1)];//выбор случайного элемента
+//    int midle = array [(left + right) / 2];//выбор среднего элемента
     int temp = 0;
 
     while (left <= right) {
@@ -74,10 +81,10 @@ void quick (int array [], int first, int last)
     }
 
     if (first < right) {//рекурсия
-        quick (array, first, right);
+        quickSort (array, first, right);
     }
 
     if (last > left) {
-        quick (array, left, last);
+        quickSort (array, left, last);
     }
 }

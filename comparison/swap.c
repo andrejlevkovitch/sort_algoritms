@@ -3,13 +3,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+void swapSort (int array [], int size);
+
 int main (void)
 {
     FILE *input;
     FILE *output;
     int size = 0;
-    int temp = 0;
-    int index = 0;
     int *array = NULL;
 
     if ((input = fopen ("input.txt", "r")) == NULL) {
@@ -30,25 +30,7 @@ int main (void)
         exit (EXIT_FAILURE);
     }
 
-    for (unsigned int i = 0; i < size; ++i) {
-        temp = array [i];
-        index = i;//индекс элемента сравнения
-
-        for (unsigned int j = i + 1; j < size; ++j) {
-            if (temp > array [j]) {
-                temp = array [j];//если текущий элемент меньшье элемента сравнения, то текущий становится элементом сравнения
-                index = j;//индекс также меняется
-            }
-
-            if (i != 0 && array [i - 1] == temp)
-                break;//прерывает сравнение, если найден элемент, равный предыдущему отсортированному
-        }
-
-        if (index != i) {
-            array [index] = array [i];
-            array [i] = temp;
-        }
-    }
+    swapSort (array, size);
 
     if ((output = fopen ("output.txt", "w")) == NULL) {
         printf ("ERROR of open file output.txt\n");
@@ -68,4 +50,30 @@ int main (void)
     array = NULL;
 
     return EXIT_SUCCESS;
+}
+
+void swapSort (int array [], int size)
+{
+    int temp = 0;
+    int index = 0;
+
+    for (unsigned int i = 0; i < size; ++i) {
+        temp = array [i];
+        index = i;//индекс элемента сравнения
+
+        for (unsigned int j = i + 1; j < size; ++j) {
+            if (temp > array [j]) {
+                temp = array [j];//если текущий элемент меньшье элемента сравнения, то текущий становится элементом сравнения
+                index = j;//индекс также меняется
+            }
+
+            if (i != 0 && array [i - 1] == temp)
+                break;//прерывает сравнение, если найден элемент, равный предыдущему отсортированному
+        }
+
+        if (index != i) {
+            array [index] = array [i];
+            array [i] = temp;
+        }
+    }
 }

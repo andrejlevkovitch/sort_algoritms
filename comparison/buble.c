@@ -3,13 +3,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+void bubleSort (int array [], int size);
+
 int main (void)
 {
     FILE *input;
     FILE *output;
     int size = 0;
     int *array = NULL;
-    int temp = 0;
 
     if ((input = fopen ("input.txt", "r")) == NULL) {
         printf ("ERROR of open file input.txt\n");
@@ -29,15 +30,7 @@ int main (void)
         exit (EXIT_FAILURE);
     }
 
-    for (unsigned int i = 1; i < size; ++i) {
-        for (unsigned int j = 0; j < size - i; ++j) {
-           if (array [j] > array [j + 1]) {
-               temp = array [j];
-               array [j] = array [j + 1];
-               array [j + 1] = temp;
-           }
-        }
-    }
+    bubleSort (array, size);
 
     if ((output = fopen ("output.txt", "w")) == NULL) {
         printf ("ERROR of open file output.txt\n");
@@ -54,4 +47,19 @@ int main (void)
     }
 
     return EXIT_SUCCESS;
+}
+
+void bubleSort (int array [], int size)
+{
+    int temp = 0;
+
+    for (unsigned int i = 1; i < size; ++i) {
+        for (unsigned int j = 0; j < size - i; ++j) {
+           if (array [j] > array [j + 1]) {
+               temp = array [j];
+               array [j] = array [j + 1];
+               array [j + 1] = temp;
+           }
+        }
+    }
 }

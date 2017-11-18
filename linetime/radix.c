@@ -5,7 +5,7 @@
 
 #define LENGTH 256//размер максимального числа для байта
 
-void countSort (int array [], int size, int maxElement);
+void radixSort (int array [], int size, int maxElement);
 
 int main (void)
 {
@@ -35,7 +35,7 @@ int main (void)
         exit (EXIT_FAILURE);
     }
 
-    countSort (array, size, maxElement);
+    radixSort (array, size, maxElement);
 
     if ((output = fopen ("output.txt", "w")) == NULL) {
         printf ("ERROR of open file output.txt\n");
@@ -57,7 +57,7 @@ int main (void)
     return EXIT_SUCCESS;
 }
 
-void countSort (int array [], int size, int maxElement)
+void radixSort (int array [], int size, int maxElement)
 {
     int countArray [LENGTH] = {};
     unsigned char *temp = NULL;
