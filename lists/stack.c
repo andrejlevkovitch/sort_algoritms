@@ -1,4 +1,4 @@
-//stack.c
+//stack.c - стэк
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -15,16 +15,16 @@ int main (void)
 
     printf ("you input %hu\n", size);
 
-    stack = malloc (size * sizeof *stack);
-
     while (getchar () != '\n')
         continue;
 
     if (size)
+        stack = malloc (size * sizeof *stack);
+
         do {
             printf ("input operace (and element)\n");
             switch (operace = getchar ()) {
-                case '+':
+                case '+'://добавление элемента
                     if (top == size)
                         printf ("stack overflow!\n");
                     else {
@@ -34,7 +34,7 @@ int main (void)
                             printf ("missing input\n");
                     }
                     break;
-                case '-':
+                case '-'://удаление элемента
                     if (!top)
                         printf ("stack is empty\n");
                     else {
@@ -42,14 +42,20 @@ int main (void)
                         printf ("remove element %i\n", stack [top]);
                     }
                     break;
-                case EOF:
+                case EOF://выход из программы
                     printf ("end\n");
+                    break;
+                case '\n'://вывод стэка
+                    for (unsigned int i = 0; i < top; ++i) {
+                        printf ("%i ", stack [i]);
+                    }
+                    printf ("\n");
                     break;
                 default:
                     printf ("unknown operace\n");
                     break;
             }
-            if (operace != EOF)
+            if (operace != EOF && operace != '\n')
                 while (getchar () != '\n')
                     continue;
         } while (operace != EOF);
