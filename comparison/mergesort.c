@@ -65,6 +65,8 @@ void merge (int array [], int first, int last)//рекурсия
 
         msort (array, first, midle, last);//впервые вызывается, когда рекурсия достигла размера 1 элемента
     }
+
+    return;
 }
 
 void msort (int array [], int first, int midle, int last)//сортировка
@@ -117,4 +119,6 @@ void msort (int array [], int first, int midle, int last)//сортировка
     arL = NULL;
     free (arR);
     arR = NULL;
+
+    return;
 }

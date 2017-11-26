@@ -62,4 +62,6 @@ void bubleSort (int array [], int size)
            }
         }
     }
+
+    return;
 }

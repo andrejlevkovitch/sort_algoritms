@@ -70,14 +70,14 @@ void radixSort (int array [], int size, int maxElement)
             countArray [i] = 0;
         }
         for (unsigned int i = 0; i < size; ++i) {
-            temp = (long) &array [i] + (long) l;//(long) нужен для расчета адреса байта, иначе прибавляется 4 а не 1
+            temp = (unsigned char*) &array [i] + l;//(long) нужен для расчета адреса байта, иначе прибавляется 4 а не 1
             countArray [*temp] += 1;
         }
         for (unsigned int i = 1; i < LENGTH; ++i) {
             countArray [i] += countArray [i - 1];
         }
         for (signed int i = size - 1; i >= 0; --i) {
-            temp = (long) &array [i] + (long) l;
+            temp = (unsigned char*) &array [i] + l;
             countArray [*temp] -= 1;
             rezult [countArray [*temp]] = array [i];
         }
@@ -88,4 +88,6 @@ void radixSort (int array [], int size, int maxElement)
 
     free (rezult);
     rezult = NULL;
+
+    return;
 }

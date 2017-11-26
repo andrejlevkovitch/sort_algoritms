@@ -91,4 +91,6 @@ void countSort (int array [], int size, int minElement, int maxElement)
     rezult = NULL;
     free (countArray);
     countArray = NULL;
+
+    return;
 }

@@ -76,4 +76,6 @@ void swapSort (int array [], int size)
             array [i] = temp;
         }
     }
+
+    return;
 }

@@ -87,4 +87,6 @@ void quickSort (int array [], int first, int last)
     if (last > left) {
         quickSort (array, left, last);
     }
+
+    return;
 }
