@@ -26,16 +26,20 @@ void walk (const struct node *);//хотьба по дереву и печать
 void print_tree (const struct tree *);//печать структуры
 struct node *min (const struct tree *);
 struct node *max (const struct tree *);
+int hight (const struct node *);
+void del_node (struct node *);
 
 int main (int argc, char *argv [])
 {
-    int kurrentFlag = 0;
-    char *validFlags [nFlags] = {"-help"};
-    for (kurrentFlag = 0; kurrentFlag < nFlags; ++kurrentFlag) {
-        if (!strcmp (argv [1], validFlags [kurrentFlag]))
-            break;
-    }
     if (argc > 1) {
+        int kurrentFlag = 0;
+        char *validFlags [nFlags] = {"-help"};
+
+        for (kurrentFlag = 0; kurrentFlag < nFlags; ++kurrentFlag) {
+            if (!strcmp (argv [1], validFlags [kurrentFlag]))
+                break;
+        }
+
         switch (kurrentFlag) {
             case 0:
                 printf ("This program performs the following operations:\n");
@@ -44,6 +48,7 @@ int main (int argc, char *argv [])
                 printf ("s element search;\n");
                 printf ("a output of the minimal element;\n");
                 printf ("z output of the maximal element;\n");
+                printf ("h output hight of the tree;\n");
                 printf ("p output of the tree.\n");
                 printf ("\nIf you want to exit input cntrl+d\n");
                 break;
@@ -111,6 +116,9 @@ int main (int argc, char *argv [])
                 else
                     printf ("MaxElement was not searched in the tree.\n");
                 break;
+            case 'h':
+                printf ("Hight of the tree == %i\n", hight (arbo->root));
+                break;
             default:
                 printf ("Unknow operace!\n");
                 break;
@@ -120,12 +128,18 @@ int main (int argc, char *argv [])
             continue;
     } while (operace != EOF);
 
+    del_node (arbo->root);
+    free (arbo);
+    arbo = NULL;
+    free (exm);
+    exm = NULL;
+
     return EXIT_SUCCESS;
 }
 
 struct tree *create (void)
 {
-    struct tree *new_tree = malloc (sizeof new_tree);//выделение памяти под структуру
+    struct tree *new_tree = malloc (sizeof *new_tree);//выделение памяти под структуру
 
     if (new_tree == NULL)//если что-то пошло не так
         return NULL;
@@ -134,24 +148,6 @@ struct tree *create (void)
     new_tree->size = 0;
 
     return new_tree;
-}
-
-bool search (const struct tree *search_tree, int element)
-{
-    const struct node *search_node = search_tree->root;
-
-    for (;;) {
-        if (search_node == NULL)//элемент не обнаружен
-            return false;
-        else
-            if (search_node->info == element)//элемент обнаружен
-                return true;
-            else
-                if (search_node->info > element)//если элемента нет в текущем узле
-                    search_node = search_node->left;
-                else
-                    search_node = search_node->right;
-    }
 }
 
 bool insert (struct tree *in_tree, int element)
@@ -185,6 +181,24 @@ bool insert (struct tree *in_tree, int element)
                     new = &in_node->right;
                     in_node = in_node->right;
                 }
+    }
+}
+
+bool search (const struct tree *search_tree, int element)
+{
+    const struct node *search_node = search_tree->root;
+
+    for (;;) {
+        if (search_node == NULL)//элемент не обнаружен
+            return false;
+        else
+            if (search_node->info == element)//элемент обнаружен
+                return true;
+            else
+                if (search_node->info > element)//если элемента нет в текущем узле
+                    search_node = search_node->left;
+                else
+                    search_node = search_node->right;
     }
 }
 
@@ -259,6 +273,7 @@ void walk (const struct node *kur_node)
 void print_tree (const struct tree *kur_tree)
 {
     walk (kur_tree->root);
+    return;
 }
 
 struct node *min (const struct tree *search_tree)
@@ -286,4 +301,38 @@ struct node *max (const struct tree *search_tree)
     }
 
     return search_node;
+}
+
+int hight (const struct node *h_node)
+{
+    int h1 = 0, h2 = 0;
+
+    if (!h_node)
+        return 0;
+    else {
+        if (h_node->left) {
+            h1 = hight (h_node->left);
+        }
+        if (h_node->right) {
+            h2 = hight (h_node->right);
+        }
+    }
+
+    if (h1 > h2)
+        return h1 + 1;
+    else
+        return h2 + 1;
+}
+
+void del_node (struct node *rm_node)
+{
+    if (rm_node->left)
+        del_node (rm_node->left);
+    if (rm_node->right)
+        del_node (rm_node->right);
+
+    free (rm_node);
+    rm_node = NULL;
+
+    return;
 }

@@ -46,6 +46,9 @@ int main (void)
         exit (EXIT_FAILURE);
     }
 
+    free (array);
+    array = NULL;
+
     return EXIT_SUCCESS;
 }
 

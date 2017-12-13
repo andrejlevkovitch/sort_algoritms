@@ -1,4 +1,5 @@
 //countsort.c - сортировка подсчетом
+//ВАЖНО!!!!!! НЕ РАБОТАТЬ СО ЗНАЧЕНИЯМИ LONG!!!!
 
 #include <stdio.h>
 #include <stdlib.h>
