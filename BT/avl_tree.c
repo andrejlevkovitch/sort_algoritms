@@ -12,7 +12,7 @@
 struct node {
     struct node *child [2];
     int info;
-    int balance;
+    short balance;
 };
 
 struct tree {
@@ -138,7 +138,6 @@ int main (int argc, char *argv [])
     } while (operace != EOF);
 
     avl = del_tree (avl);
-    free (exm);
     exm = NULL;
 
     return EXIT_SUCCESS;
@@ -192,8 +191,8 @@ struct node *insert (struct tree *in_tree, int element)
     struct node **new = &in_tree->root;
 
     struct node **array [MAX_H] = {};//массив хранящий указатели на все пройденные ноды
-    int dirs [MAX_H] = {};//массив хранящий направления движения
-    int count = 0;
+    short dirs [MAX_H] = {};//массив хранящий направления движения
+    short count = 0;
 
     for (;;) {
         if (!in_node) {
@@ -235,8 +234,8 @@ int rm (struct tree *rm_tree, int element)
     struct node **q = &rm_tree->root;
 
     struct node **array [MAX_H] = {};//тоже что и во вставке
-    int dirs [MAX_H] = {};
-    int count = 0;
+    short dirs [MAX_H] = {};
+    short count = 0;
 
     for (;;) {
         if (!rm_node)
@@ -271,7 +270,7 @@ int rm (struct tree *rm_tree, int element)
         }
         else {
             struct node *x = y->child [1];
-            int px = 0;
+            short px = 0;
             px = count;
             dirs [count] = 1;//дополнение в массив указателей происходит ниже
             count++;
@@ -364,8 +363,8 @@ void turn (struct node **tNode)
 
     B = *tNode;
 
-    int dir = (B->balance < 0);//направление
-    int mod = (dir) ? 1: -1;//модификатор, зависящий от направления
+    short dir = (B->balance < 0);//направление
+    short mod = (dir) ? 1: -1;//модификатор, зависящий от направления
 
     switch (B->child [dir]->balance * mod) {//операции поворота одни и теже, но происходят зеркально, взависимости от направления
         case -1: case 0:
@@ -438,7 +437,7 @@ struct node *minORmax(const struct tree *search_tree, int dir)
 
 int hight (const struct node *h_node)
 {
-    int h1 = 0, h2 = 0;
+    short h1 = 0, h2 = 0;
 
     if (!h_node)
         return 0;
