@@ -131,7 +131,6 @@ int main (int argc, char *argv [])
     del_node (arbo->root);
     free (arbo);
     arbo = NULL;
-    free (exm);
     exm = NULL;
 
     return EXIT_SUCCESS;
