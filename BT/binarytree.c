@@ -150,6 +150,24 @@ struct tree *create (void)
     return new_tree;
 }
 
+bool search (const struct tree *search_tree, int element)
+{
+    const struct node *search_node = search_tree->root;
+
+    for (;;) {
+        if (search_node == NULL)//элемент не обнаружен
+            return false;
+        else
+            if (search_node->info == element)//элемент обнаружен
+                return true;
+            else
+                if (search_node->info > element)//если элемента нет в текущем узле
+                    search_node = search_node->left;
+                else
+                    search_node = search_node->right;
+    }
+}
+
 bool insert (struct tree *in_tree, int element)
 {
     struct node *in_node = in_tree->root;
@@ -181,24 +199,6 @@ bool insert (struct tree *in_tree, int element)
                     new = &in_node->right;
                     in_node = in_node->right;
                 }
-    }
-}
-
-bool search (const struct tree *search_tree, int element)
-{
-    const struct node *search_node = search_tree->root;
-
-    for (;;) {
-        if (search_node == NULL)//элемент не обнаружен
-            return false;
-        else
-            if (search_node->info == element)//элемент обнаружен
-                return true;
-            else
-                if (search_node->info > element)//если элемента нет в текущем узле
-                    search_node = search_node->left;
-                else
-                    search_node = search_node->right;
     }
 }
 
@@ -331,8 +331,9 @@ void del_node (struct node *rm_node)
     if (rm_node->right)
         del_node (rm_node->right);
 
+    rm_node->left = NULL;
+    rm_node->right = NULL;
     free (rm_node);
-    rm_node = NULL;
 
     return;
 }
